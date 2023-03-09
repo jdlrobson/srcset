@@ -20,6 +20,7 @@ interface Transformer {
   name: string;
   getArgs: Function;
   transform: Function;
+  report?: Function;
 }
 
 /**
@@ -218,6 +219,11 @@ async function createVersions(browser: Browser, slug: string, transformer: Trans
     });
 
     await Promise.all(promises);
+
+    if (transformer.report) {
+      console.log(transformer.report());
+    }
+
   }
 
   // Sort by image size
